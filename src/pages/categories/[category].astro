@@ -1,0 +1,38 @@
+---
+// src/pages/category/[category].astro
+
+import MainLayout from '../../layouts/MainLayout.astro'
+import type { TBlogPost } from '../types/blog'
+
+// 取得所有文章
+const allPosts = await Astro.glob<TBlogPost>('../blogs/*.md')
+
+// 取得網址參數中的 category
+const { category } = Astro.params
+
+// 篩選出屬於該 category 的文章
+const filteredPosts = allPosts.filter((post) => post.frontmatter?.category === category)
+
+// 產生所有 category 對應的靜態路徑
+export async function getStaticPaths() {
+	const posts = await Astro.glob<TBlogPost>('../blogs/*.md')
+	const categorySet = new Set<string>()
+
+	for (const post of posts) {
+		if (post.frontmatter?.category) {
+			categorySet.add(post.frontmatter.category)
+		}
+	}
+
+	return Array.from(categorySet).map((category) => ({
+		params: { category }
+	}))
+}
+---
+
+<MainLayout title={`分類: ${category}`}>
+	<h1>分類: {category}</h1>
+	<ul>
+		{filteredPosts.map((post) => <li>{post.frontmatter.title}</li>)}
+	</ul>
+</MainLayout>

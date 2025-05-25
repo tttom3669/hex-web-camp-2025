@@ -1,10 +1,80 @@
 @import 'tailwindcss';
 
 @theme {
+	--header-height: 5.625rem; /* 90px */
+	--gutter-width: 1.5rem; /* 24px */
+
+	/* === font-size === */
 	--text-7: calc(7 * 0.25rem);
+	--text-16: calc(16 * 0.25rem);
+	--text-30: calc(30 * 0.25rem);
+	/* === #font-size === */
+
+	/* === breakpoint === */
+	--breakpoint-*: initial;
+	--breakpoint-3xl: 100rem /* 1600px */;
+	--breakpoint-2xl: 90rem /* 1440px */;
+	--breakpoint-xl: 75rem /* 1200px */;
+	--breakpoint-lg: 62rem /* 992px */;
+	--breakpoint-md: 48rem /* 768px */;
+	--breakpoint-sm: 36rem /* 576px */;
+	/* === #breakpoint === */
+
+	/* === color === */
+	--color-primary: rgba(0, 39, 213, 1);
+	--color-secondary-1: rgba(108, 117, 125, 1);
+	--color-gray-1: rgba(75, 75, 75, 1);
+	--color-gray-2: rgba(237, 237, 237, 1);
+	--color-gray-3: rgba(245, 245, 245, 1);
+	--color-gray-4: rgba(251, 251, 251, 1) /* === #color === */;
 }
 
 @utility container {
 	margin-left: auto;
 	margin-right: auto;
+	padding-left: calc(var(--gutter-width) / 2);
+	padding-right: calc(var(--gutter-width) / 2);
+
+	@variant 2xl {
+		max-width: calc(81rem + var(--gutter-width));
+	}
+}
+@utility text-h2 {
+	@apply text-5xl/normal font-bold sm:text-16/normal;
+}
+@utility text-h3 {
+	@apply text-7/normal font-bold;
+}
+@utility g-row {
+	@apply grid grid-cols-12 gap-x-6;
+}
+
+@utility btn {
+	@apply inline-block rounded-[40px] px-4 py-2 transition-colors duration-300;
+}
+@utility btn-outline-gray-1 {
+	@apply border border-black text-gray-1 hover:border-primary hover:bg-primary hover:text-white;
+}
+@utility btn-primary-1 {
+	@apply border border-primary text-primary hover:bg-primary hover:text-white;
+}
+
+@layer base {
+	body {
+		font-family: 'Noto Sans TC', sans-serif;
+		font-weight: 500;
+		background-color: var(--color-gray-4);
+		color: black;
+	}
+	.site {
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+	}
+	.site-main {
+		padding-top: var(--header-height);
+	}
+	.site > .site-footer {
+		margin-top: auto;
+	}
 }

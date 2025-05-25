@@ -18,8 +18,8 @@ const currentYear = new Date().getFullYear()
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
-	<body class="site-main">
-		<header>
+	<body class="site">
+		<header class="fixed top-0 left-0 z-10 w-full bg-white">
 			<div class="container">
 				<ul class="flex items-center justify-center gap-10 py-6 text-7 font-bold">
 					<li><a href="/">首頁</a></li>
@@ -27,7 +27,7 @@ const currentYear = new Date().getFullYear()
 				</ul>
 			</div>
 		</header>
-		<main>
+		<main class="site-main">
 			<slot />
 		</main>
 		<footer class="site-footer py-6 text-center">
@@ -37,17 +37,3 @@ const currentYear = new Date().getFullYear()
 		</footer>
 	</body>
 </html>
-
-<style is:global>
-	body {
-		font-family: 'Noto Sans TC', sans-serif;
-	}
-	.site-main {
-		min-height: 100vh;
-		display: flex;
-		flex-direction: column;
-	}
-	.site-main > .site-footer {
-		margin-top: auto;
-	}
-</style>

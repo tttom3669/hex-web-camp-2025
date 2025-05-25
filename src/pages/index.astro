@@ -1,5 +1,491 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro'
+import type { TBlogPost } from '../pages/types/blog'
+// import Swiper and modules styles
+import 'swiper/css'
+import 'swiper/css/pagination'
+
+const services = [
+	{
+		title: '履歷健檢',
+		description:
+			'履歷是打開機會之門的第一步。讓我協助你突顯專業技術與核心能力，並透過簡短模擬面試為你加分，讓面試官第一眼就被你吸引。',
+		imgSrc:
+			'https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/desktop/index/photo.png?raw=true',
+		mobileImgSrc:
+			'https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/mobile/index/photo1.png?raw=true'
+	},
+	{
+		title: '線上諮詢',
+		description:
+			'想快速解決前端學習瓶頸，或需要專業職涯指引？透過線上一對一諮詢，我將協助你更有方向地邁進。',
+		imgSrc:
+			'https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/desktop/index/photo2.png?raw=true',
+		mobileImgSrc:
+			'https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/mobile/index/photo2.png?raw=true'
+	},
+	{
+		title: '網頁開發',
+		description:
+			'想打造高效能、具美感的網站？我提供從需求訪談到架構實作的一站式服務，讓你的品牌與產品在線上脫穎而出。',
+		imgSrc:
+			'https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/desktop/index/photo3.png?raw=true',
+		mobileImgSrc:
+			'https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/mobile/index/photo3.png?raw=true'
+	},
+	{
+		title: '企業內訓',
+		description:
+			'想讓團隊快速掌握前端最新技術或優化現有專案流程？我可協助打造專業、實用的企業內訓課程，一次解決團隊痛點。',
+		imgSrc:
+			'https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/desktop/index/photo4.png?raw=true',
+		mobileImgSrc:
+			'https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/mobile/index/photo4.png?raw=true'
+	}
+]
+
+const blogsPosts = await Astro.glob<TBlogPost>('./blogs/*.md')
+const sortBlogsPosts = blogsPosts.sort((a, b) => {
+	// 先比較 category，沒有 category 的排在後面
+	if (a.frontmatter.category && !b.frontmatter.category) {
+		return -1 // a 有 category，b 沒有，a 排在前面
+	}
+	if (!a.frontmatter.category && b.frontmatter.category) {
+		return 1 // a 沒有 category，b 有，a 排在後面
+	}
+
+	// 如果兩者都有或都沒有 category，則依日期排序
+	return new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime()
+})
+
+const podcastsData = [
+	{
+		title: '無經驗到前端工程師 Offer',
+		tags: ['打造前端專案與履歷亮點', '深度強化面試表現'],
+		imgSrc:
+			'https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/desktop/index/people.png?raw=true'
+	},
+	{
+		title: '轉職迷茫到明確學習規劃',
+		tags: ['制訂階段性目標與時間安排', '鼓勵參與前端社群或活動'],
+		imgSrc:
+			'https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/desktop/index/people2.png?raw=true'
+	},
+	{
+		title: '面試緊張到從容應對',
+		tags: ['透過面試模擬找出常犯的邏輯漏洞', '討論遇到不熟悉議題時的回應方式'],
+		imgSrc:
+			'https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/desktop/index/people3.png?raw=true'
+	},
+	{
+		title: '面試緊張到從容應對',
+		tags: ['擬定進階框架或技術研究目標', '培養跨團隊溝通與簡報能力'],
+		imgSrc:
+			'https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/desktop/index/people4.png?raw=true'
+	}
+]
 ---
 
-<MainLayout title="首頁 | Alyse Wang"> test </MainLayout>
+<MainLayout title="首頁 | Alyse Wang">
+	<section>
+		<div class="flex flex-wrap">
+			<div class="relative aspect-square h-auto w-full sm:aspect-[960/834] lg:w-1/2">
+				<picture>
+					<source
+						srcset="https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/mobile/index/Hero%20Section.png?raw=true"
+						media="(max-width: 768px)"
+					/>
+					<img
+						class="absolute top-0 left-0 h-full w-full object-cover"
+						src="https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/desktop/index/Hero%20Section.png?raw=true"
+						alt="hero section Background"
+					/>
+				</picture>
+			</div>
+			<div class="relative aspect-[375/356] h-auto w-full sm:aspect-[960/834] lg:w-1/2">
+				<picture>
+					<source
+						srcset="https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/mobile/index/Hero%20Section2.png?raw=true"
+						media="(max-width: 768px)"
+					/>
+					<img
+						class="absolute top-0 left-0 z-0 h-full w-full object-cover"
+						src="https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/desktop/index/Hero%20Section2.png?raw=true"
+						alt="hero section Background"
+					/>
+				</picture>
+				<div
+					class="relative z-1 mx-auto flex h-full w-fit flex-col gap-3 pt-6 text-primary md:w-auto md:justify-end md:pt-0 md:pb-[31.25%] md:pl-[8.334%]"
+				>
+					<h1
+						class="text-[clamp(3.25rem,6.25vw,7.5rem)]/normal font-black md:text-[clamp(5rem,6.25vw,7.5rem)]/normal"
+					>
+						Alyse Wang
+					</h1>
+					<p class="text-7/normal font-bold">前端工程師 & 職涯諮詢師</p>
+				</div>
+			</div>
+		</div>
+		<div class="-mb-[42.66vw] flex justify-end px-3 md:-mb-[8.34vw] md:px-20 lg:pl-0">
+			<div
+				class="relative z-1 inline-flex w-[clamp(50rem,56vw,67.3125rem)] -translate-y-[42.66vw] flex-col gap-4 bg-white px-6 py-10 text-2xl/normal sm:px-5 sm:py-20 sm:text-7/normal md:-translate-y-[8.34vw]"
+			>
+				<div class="flex flex-col gap-2 sm:flex-row">
+					<div class="flex gap-2"><span> 嗨，我是</span><span> Alyse</span></div>
+					<span>一名深耕前端技術的工程師。</span>
+				</div>
+				<p>
+					擅長
+					React、Vue等框架，同時熱愛為轉職與新手工程師提供職涯指導。邀請你與我一起，開啟更具潛能的程式與職涯之旅！
+				</p>
+				<div class="flex">
+					<a href="#">
+						<img
+							src="https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/desktop/index/onlyIcon.png?raw=true"
+							alt="youtube"
+						/>
+					</a>
+					<a href="#">
+						<img
+							src="https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/desktop/index/onlyIcon-1.png?raw=true"
+							alt="icon"
+						/>
+					</a>
+					<a href="#">
+						<img
+							src="https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/desktop/index/onlyIcon-2.png?raw=true"
+							alt="facebook"
+						/>
+					</a>
+					<a href="#">
+						<img
+							src="https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/mobile/index/icons8-linkedin%201.png?raw=true"
+							alt="linkedin"
+						/>
+					</a>
+					<a href="#">
+						<img
+							src="https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/desktop/index/onlyIcon-3.png?raw=true"
+							alt="instagram"
+						/>
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="py-16 md:py-20">
+		<div class="container">
+			<h2 class="mb-8 text-h2">專業服務與方案</h2>
+
+			<ul class="mb-8 flex flex-col gap-8 sm:gap-16">
+				{
+					services.map((service, key) => (
+						<li>
+							<div class="g-row items-center">
+								<div
+									class={`col-span-12 md:col-span-6 md:row-start-1 lg:col-span-6 ${key % 2 === 1 ? 'md:col-start-7 lg:col-start-6' : 'md:col-start-1 lg:col-start-2'} `}
+								>
+									<picture>
+										<source srcset={service.mobileImgSrc} media="(max-width: 768px)" />
+										<img
+											class="aspect-[351/176] h-auto w-full object-cover sm:aspect-[636/320]"
+											src={service.imgSrc}
+											alt={service.title}
+										/>
+									</picture>
+								</div>
+								<div
+									class={`col-span-12 md:col-span-6 md:row-start-1 lg:col-span-5 ${key % 2 === 1 ? 'pr-[2.3vw] md:col-start-1 lg:col-start-2' : 'pl-[2.3vw] md:col-start-7'} `}
+								>
+									<div class="bg-white p-6">
+										<svg
+											width="40"
+											height="40"
+											viewBox="0 0 40 40"
+											fill="none"
+											xmlns="http://www.w3.org/2000/svg"
+										>
+											<path
+												fill-rule="evenodd"
+												clip-rule="evenodd"
+												d="M5 20C5 19.6685 5.1317 19.3505 5.36612 19.1161C5.60054 18.8817 5.91848 18.75 6.25 18.75H33.75C34.0815 18.75 34.3995 18.8817 34.6339 19.1161C34.8683 19.3505 35 19.6685 35 20C35 20.3315 34.8683 20.6495 34.6339 20.8839C34.3995 21.1183 34.0815 21.25 33.75 21.25H6.25C5.91848 21.25 5.60054 21.1183 5.36612 20.8839C5.1317 20.6495 5 20.3315 5 20Z"
+												fill="#0027D5"
+											/>
+										</svg>
+										<h3 class="mb-2 text-h3">{service.title}</h3>
+										<p class="text-gray-1">{service.description}</p>
+									</div>
+								</div>
+							</div>
+						</li>
+					))
+				}
+			</ul>
+			<div class="flex flex-col items-end justify-end gap-2 sm:flex-row sm:items-center">
+				<p class="text-h3">聯繫我，取得更多資訊！</p>
+				<a
+					href="#"
+					class="group flex size-10 items-center justify-center rounded-full border border-black transition-all duration-300 hover:border-primary hover:bg-primary"
+				>
+					<svg
+						width="22"
+						height="14"
+						viewBox="0 0 22 14"
+						fill="none"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<path
+							fill-rule="evenodd"
+							clip-rule="evenodd"
+							class="transition-all duration-300 group-hover:fill-white"
+							d="M0.5 7C0.5 6.58579 0.835786 6.25 1.25 6.25L18.9393 6.25L14.2197 1.53033C13.9268 1.23744 13.9268 0.762562 14.2197 0.469669C14.5126 0.176776 14.9874 0.176776 15.2803 0.469669L21.2803 6.46967C21.5732 6.76256 21.5732 7.23744 21.2803 7.53033L15.2803 13.5303C14.9874 13.8232 14.5126 13.8232 14.2197 13.5303C13.9268 13.2374 13.9268 12.7626 14.2197 12.4697L18.9393 7.75L1.25 7.75C0.835786 7.75 0.5 7.41421 0.5 7Z"
+							fill="black"></path>
+					</svg>
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<section class="border-y border-secondary-1 py-16 md:py-20">
+		<div class="container mb-6">
+			<h2 class="text-h2">部落格精選</h2>
+		</div>
+		<div class="flex justify-center">
+			<div class="blog-swiper-container relative w-full 3xl:w-auto 3xl:px-14">
+				<div class="container">
+					<div class="swiper blog-swiper">
+						<div class="swiper-wrapper">
+							{
+								sortBlogsPosts.map((post) => (
+									<div class="swiper-slide">
+										<article class="flex flex-col gap-4">
+											<picture>
+												<source srcset={post.frontmatter.mobileImgSrc} media="(max-width: 768px)" />
+												<img
+													class="aspect-[351/176] h-auto w-full object-cover sm:aspect-[416/200]"
+													src={post.frontmatter.imgSrc}
+													alt={post.frontmatter.title}
+												/>
+											</picture>
+											<div>
+												<div class="mb-4 flex flex-col gap-2">
+													<date class="mb-1">{post.frontmatter.date}</date>
+													<div class="flex items-center gap-2">
+														<ul class="flex gap-1 text-primary">
+															{post.frontmatter.tags &&
+																post.frontmatter.tags.map((tag) => (
+																	<li class="text-2xl/normal">
+																		<a href={`/tags/${tag}`}>#{tag}</a>
+																	</li>
+																))}
+														</ul>
+														{post.frontmatter.category && (
+															<a
+																class="inline-block rounded-[40px] bg-primary px-3 py-1.5 font-bold text-white"
+																href={`/categories/${post.frontmatter.category}`}
+															>
+																{post.frontmatter.category}
+															</a>
+														)}
+													</div>
+													<h3 class="mb-2 text-h3">{post.frontmatter.title}</h3>
+													<p class="line-clamp-2 text-gray-1">{post.frontmatter.description}</p>
+												</div>
+												<a class="btn btn-outline-gray-1" href={`/blogs/${post.frontmatter.slug}`}>
+													閱讀內文
+												</a>
+											</div>
+										</article>
+									</div>
+								))
+							}
+						</div>
+					</div>
+				</div>
+				<div class="mt-8 flex justify-end gap-6 pr-3 3xl:mt-0 3xl:pr-0">
+					<button
+						type="button"
+						class="group swiper-button-prev is-disabled 2xl:top-1/2xl:left-0 cursor-pointer after:hidden disabled:cursor-default 3xl:absolute 3xl:top-1/2 3xl:-left-6 3xl:z-10 3xl:-translate-y-1/2"
+					>
+						<svg
+							class="rotate-180"
+							width="44"
+							height="44"
+							viewBox="0 0 44 44"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path
+								class="fill-primary transition duration-300 group-[.is-disabled]:fill-[#b2bef2]"
+								d="M22 0C27.8348 0 33.4305 2.31785 37.5564 6.44365C41.6822 10.5695 44 16.1652 44 22C44 27.8348 41.6822 33.4305 37.5564 37.5564C33.4305 41.6822 27.8348 44 22 44C16.1652 44 10.5695 41.6822 6.44365 37.5564C2.31785 33.4305 0 27.8348 0 22C0 16.1652 2.31785 10.5695 6.44365 6.44365C10.5695 2.31785 16.1652 0 22 0ZM12.375 20.625C12.0103 20.625 11.6606 20.7699 11.4027 21.0277C11.1449 21.2856 11 21.6353 11 22C11 22.3647 11.1449 22.7144 11.4027 22.9723C11.6606 23.2301 12.0103 23.375 12.375 23.375H28.3057L22.4015 29.2765C22.2737 29.4043 22.1722 29.5561 22.1031 29.7231C22.0339 29.8902 21.9983 30.0692 21.9983 30.25C21.9983 30.4308 22.0339 30.6098 22.1031 30.7769C22.1722 30.9439 22.2737 31.0957 22.4015 31.2235C22.5293 31.3513 22.6811 31.4528 22.8481 31.5219C23.0152 31.5911 23.1942 31.6267 23.375 31.6267C23.5558 31.6267 23.7348 31.5911 23.9019 31.5219C24.0689 31.4528 24.2207 31.3513 24.3485 31.2235L32.5985 22.9735C32.7266 22.8458 32.8281 22.694 32.8975 22.527C32.9668 22.3599 33.0025 22.1809 33.0025 22C33.0025 21.8191 32.9668 21.6401 32.8975 21.473C32.8281 21.306 32.7266 21.1542 32.5985 21.0265L24.3485 12.7765C24.2207 12.6487 24.0689 12.5472 23.9019 12.4781C23.7348 12.4089 23.5558 12.3733 23.375 12.3733C23.1942 12.3733 23.0152 12.4089 22.8481 12.4781C22.6811 12.5472 22.5293 12.6487 22.4015 12.7765C22.2737 12.9043 22.1722 13.0561 22.1031 13.2231C22.0339 13.3902 21.9983 13.5692 21.9983 13.75C21.9983 13.9308 22.0339 14.1098 22.1031 14.2769C22.1722 14.4439 22.2737 14.5957 22.4015 14.7235L28.3057 20.625H12.375Z"
+								fill="#0027D5"></path>
+						</svg>
+					</button>
+					<button
+						type="button"
+						class="group swiper-button-next cursor-pointer after:hidden disabled:cursor-default 3xl:absolute 3xl:top-1/2 3xl:-right-6 3xl:z-10 3xl:-translate-y-1/2"
+					>
+						<svg
+							width="44"
+							height="44"
+							viewBox="0 0 44 44"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path
+								class="fill-primary transition duration-300 group-[.is-disabled]:fill-[#b2bef2]"
+								d="M22 0C27.8348 0 33.4305 2.31785 37.5564 6.44365C41.6822 10.5695 44 16.1652 44 22C44 27.8348 41.6822 33.4305 37.5564 37.5564C33.4305 41.6822 27.8348 44 22 44C16.1652 44 10.5695 41.6822 6.44365 37.5564C2.31785 33.4305 0 27.8348 0 22C0 16.1652 2.31785 10.5695 6.44365 6.44365C10.5695 2.31785 16.1652 0 22 0ZM12.375 20.625C12.0103 20.625 11.6606 20.7699 11.4027 21.0277C11.1449 21.2856 11 21.6353 11 22C11 22.3647 11.1449 22.7144 11.4027 22.9723C11.6606 23.2301 12.0103 23.375 12.375 23.375H28.3057L22.4015 29.2765C22.2737 29.4043 22.1722 29.5561 22.1031 29.7231C22.0339 29.8902 21.9983 30.0692 21.9983 30.25C21.9983 30.4308 22.0339 30.6098 22.1031 30.7769C22.1722 30.9439 22.2737 31.0957 22.4015 31.2235C22.5293 31.3513 22.6811 31.4528 22.8481 31.5219C23.0152 31.5911 23.1942 31.6267 23.375 31.6267C23.5558 31.6267 23.7348 31.5911 23.9019 31.5219C24.0689 31.4528 24.2207 31.3513 24.3485 31.2235L32.5985 22.9735C32.7266 22.8458 32.8281 22.694 32.8975 22.527C32.9668 22.3599 33.0025 22.1809 33.0025 22C33.0025 21.8191 32.9668 21.6401 32.8975 21.473C32.8281 21.306 32.7266 21.1542 32.5985 21.0265L24.3485 12.7765C24.2207 12.6487 24.0689 12.5472 23.9019 12.4781C23.7348 12.4089 23.5558 12.3733 23.375 12.3733C23.1942 12.3733 23.0152 12.4089 22.8481 12.4781C22.6811 12.5472 22.5293 12.6487 22.4015 12.7765C22.2737 12.9043 22.1722 13.0561 22.1031 13.2231C22.0339 13.3902 21.9983 13.5692 21.9983 13.75C21.9983 13.9308 22.0339 14.1098 22.1031 14.2769C22.1722 14.4439 22.2737 14.5957 22.4015 14.7235L28.3057 20.625H12.375Z"
+								fill="#0027D5"></path>
+						</svg>
+					</button>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="py-16 md:py-20">
+		<div class="container">
+			<h2 class="mb-6 flex flex-col gap-0 text-h2 md:flex-row">
+				<span>職涯諮詢</span>
+				<span>成功案例</span>
+			</h2>
+			<div class="mb-10 g-row lg:grid-rows-2">
+				<div
+					class="col-span-12 -mb-[42.66vw] sm:mb-0 lg:col-span-7 lg:col-start-1 lg:row-span-2 lg:row-start-1"
+				>
+					<div class="h-full w-full bg-gray-2 p-6">
+						<picture>
+							<source
+								srcset="https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/mobile/index/photo8.png?raw=true"
+								media="(max-width: 576px)"
+							/>
+							<img
+								class="h-full w-full object-cover"
+								src="https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/desktop/index/photo8.png?raw=true"
+								alt=""
+							/>
+						</picture>
+					</div>
+				</div>
+				<div class="col-span-12 lg:col-span-5 lg:col-start-6 lg:row-start-1">
+					<div class="flex flex-col gap-6 bg-white px-6 py-10 lg:mt-7.5 lg:px-10 lg:py-20">
+						<svg
+							width="40"
+							height="40"
+							viewBox="0 0 40 40"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path
+								fill-rule="evenodd"
+								clip-rule="evenodd"
+								d="M5 20C5 19.6685 5.1317 19.3505 5.36612 19.1161C5.60054 18.8817 5.91848 18.75 6.25 18.75H33.75C34.0815 18.75 34.3995 18.8817 34.6339 19.1161C34.8683 19.3505 35 19.6685 35 20C35 20.3315 34.8683 20.6495 34.6339 20.8839C34.3995 21.1183 34.0815 21.25 33.75 21.25H6.25C5.91848 21.25 5.60054 21.1183 5.36612 20.8839C5.1317 20.6495 5 20.3315 5 20Z"
+								fill="#0027D5"></path>
+						</svg>
+						<p class="font-bold">
+							在職涯發展的關鍵轉折點上，適時的協助與正確的方向至關重要。藉由職涯諮詢，我可以幫助你加速釐清目標、建立更全面的技術與軟實力，並有效<strong
+								class="text-primary">突破原有的舒適圈</strong
+							>。
+						</p>
+					</div>
+				</div>
+				<div class="col-span-12 lg:col-span-5 lg:col-start-8">
+					<div class="mt-3 flex flex-col gap-6 bg-gray-3 px-6 py-10 lg:-mt-10 lg:px-10 lg:py-20">
+						<svg
+							width="40"
+							height="40"
+							viewBox="0 0 40 40"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path
+								fill-rule="evenodd"
+								clip-rule="evenodd"
+								d="M5 20C5 19.6685 5.1317 19.3505 5.36612 19.1161C5.60054 18.8817 5.91848 18.75 6.25 18.75H33.75C34.0815 18.75 34.3995 18.8817 34.6339 19.1161C34.8683 19.3505 35 19.6685 35 20C35 20.3315 34.8683 20.6495 34.6339 20.8839C34.3995 21.1183 34.0815 21.25 33.75 21.25H6.25C5.91848 21.25 5.60054 21.1183 5.36612 20.8839C5.1317 20.6495 5 20.3315 5 20Z"
+								fill="#0027D5"></path>
+						</svg>
+						<p class="font-bold">期待在下一個新機會中，我能與你一起攜手邁向更高峰！</p>
+						<a href="#" class="btn self-start btn-primary-1"> 立即預約諮詢 </a>
+					</div>
+				</div>
+			</div>
+			<ul class="flex gap-6">
+				{
+					podcastsData.map((podcast) => (
+						<li>
+							<div class="flex flex-col gap-4">
+								<img class="size-20 rounded-full" src={podcast.imgSrc} alt={podcast.title} />
+								<div class="flex flex-col items-start gap-1">
+									<h3 class="mb-2 text-2xl/normal font-bold">{podcast.title}</h3>
+									<ul class="mb-4 flex flex-col gap-2 border-b border-gray-1 pb-4 text-gray-1">
+										{podcast.tags.map((tag) => (
+											<li class="flex items-center gap-2">
+												<svg
+													width="16"
+													height="16"
+													viewBox="0 0 16 16"
+													fill="none"
+													xmlns="http://www.w3.org/2000/svg"
+												>
+													<path
+														d="M2 0C1.46957 0 0.960859 0.210714 0.585786 0.585786C0.210714 0.960859 0 1.46957 0 2L0 14C0 14.5304 0.210714 15.0391 0.585786 15.4142C0.960859 15.7893 1.46957 16 2 16H14C14.5304 16 15.0391 15.7893 15.4142 15.4142C15.7893 15.0391 16 14.5304 16 14V2C16 1.46957 15.7893 0.960859 15.4142 0.585786C15.0391 0.210714 14.5304 0 14 0L2 0ZM12.03 4.97C12.1689 5.10875 12.2479 5.29644 12.2499 5.49275C12.252 5.68907 12.177 5.87837 12.041 6.02L8.049 11.01C7.98039 11.0839 7.89758 11.1432 7.80553 11.1844C7.71348 11.2255 7.61407 11.2477 7.51325 11.2496C7.41243 11.2514 7.31227 11.233 7.21876 11.1952C7.12524 11.1575 7.0403 11.1013 6.969 11.03L4.324 8.384C4.25031 8.31534 4.19121 8.23254 4.15022 8.14054C4.10923 8.04854 4.08718 7.94923 4.08541 7.84852C4.08363 7.74782 4.10216 7.64779 4.13988 7.5544C4.1776 7.46101 4.23374 7.37618 4.30496 7.30496C4.37618 7.23374 4.46101 7.1776 4.5544 7.13988C4.64779 7.10216 4.74782 7.08363 4.84852 7.08541C4.94923 7.08718 5.04854 7.10923 5.14054 7.15022C5.23254 7.19121 5.31534 7.25031 5.384 7.324L7.478 9.417L10.951 4.992C11.0195 4.91797 11.1022 4.85851 11.1942 4.81717C11.2861 4.77583 11.3855 4.75347 11.4863 4.75141C11.5871 4.74936 11.6873 4.76766 11.7809 4.80522C11.8745 4.84277 11.9596 4.89882 12.031 4.97H12.03Z"
+														fill="#0027D5"
+													/>
+												</svg>
+												{tag}
+											</li>
+										))}
+									</ul>
+									<a href="#" class="btn btn-outline-gray-1">
+										前往聆聽 podcast
+									</a>
+								</div>
+							</div>
+						</li>
+					))
+				}
+			</ul>
+		</div>
+	</section>
+</MainLayout>
+
+<script>
+	import Swiper from 'swiper'
+	import { Navigation, Pagination } from 'swiper/modules'
+	const swiper = new Swiper('.blog-swiper', {
+		modules: [Navigation, Pagination],
+		navigation: {
+			nextEl: '.blog-swiper-container .swiper-button-next',
+			prevEl: '.blog-swiper-container .swiper-button-prev'
+		},
+		slidesPerView: 1,
+		spaceBetween: 12,
+		breakpoints: {
+			768: {
+				slidesPerView: 2,
+				spaceBetween: 24
+			},
+			1200: {
+				slidesPerView: 3,
+				spaceBetween: 24
+			}
+		},
+		on: {
+			slideChangeTransitionEnd: function ({ isEnd, isBeginning }) {
+				const btnNext = document.querySelector('.blog-swiper-container .swiper-button-next')
+				const btnPrev = document.querySelector('.blog-swiper-container .swiper-button-prev')
+				if (isEnd) {
+					btnNext?.classList.add('is-disabled')
+				} else {
+					btnNext?.classList.remove('is-disabled')
+				}
+				if (isBeginning) {
+					btnPrev?.classList.add('is-disabled')
+				} else {
+					btnPrev?.classList.remove('is-disabled')
+				}
+			}
+		}
+	})
+</script>
