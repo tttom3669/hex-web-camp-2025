@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css'
+import { getUrl } from '../utils/url'
 const { title } = Astro.props
 const currentYear = new Date().getFullYear()
 ---
@@ -22,8 +23,8 @@ const currentYear = new Date().getFullYear()
 		<header class="fixed top-0 left-0 z-10 w-full bg-white">
 			<div class="container">
 				<ul class="flex items-center justify-center gap-10 py-6 text-7 font-bold">
-					<li><a href="/">首頁</a></li>
-					<li><a href="/blog">部落格</a></li>
+					<li><a href={getUrl('/')}>首頁</a></li>
+					<li><a href={getUrl('/blog')}>部落格</a></li>
 				</ul>
 			</div>
 		</header>
