@@ -410,15 +410,15 @@ const podcastsData = [
 					</div>
 				</div>
 			</div>
-			<ul class="flex gap-6">
+			<ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
 				{
 					podcastsData.map((podcast) => (
-						<li>
-							<div class="flex flex-col gap-4">
+						<li class="col-span-1 px-6 sm:px-0">
+							<div class="flex h-full flex-col gap-4">
 								<img class="size-20 rounded-full" src={podcast.imgSrc} alt={podcast.title} />
-								<div class="flex flex-col items-start gap-1">
+								<div class="flex flex-auto flex-col gap-1">
 									<h3 class="mb-2 text-2xl/normal font-bold">{podcast.title}</h3>
-									<ul class="mb-4 flex flex-col gap-2 border-b border-gray-1 pb-4 text-gray-1">
+									<ul class="mt-auto mb-4 flex flex-col gap-2 border-b border-gray-1 pb-4 text-gray-1">
 										{podcast.tags.map((tag) => (
 											<li class="flex items-center gap-2">
 												<svg
@@ -437,7 +437,7 @@ const podcastsData = [
 											</li>
 										))}
 									</ul>
-									<a href="#" class="btn btn-outline-gray-1">
+									<a href="#" class="btn self-start btn-outline-gray-1">
 										前往聆聽 podcast
 									</a>
 								</div>
@@ -445,6 +445,218 @@ const podcastsData = [
 						</li>
 					))
 				}
+			</ul>
+		</div>
+	</section>
+
+	<section>
+		<div class="grid grid-cols-2">
+			<div class="col-span-2 xl:col-span-1">
+				<picture>
+					<source
+						srcset="https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/mobile/index/photo9.png?raw=true"
+						media="(max-width: 768px)"
+					/>
+					<img
+						class="h-full w-full object-cover"
+						src="https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/desktop/index/photo9.png?raw=true"
+						alt="bg"
+					/>
+				</picture>
+			</div>
+			<div class="col-span-2 xl:col-span-1">
+				<div
+					class="relative flex h-full w-full items-center justify-center p-3 sm:p-6 lg:p-20 xl:px-[clamp(2rem,4.166vw,5rem)]"
+				>
+					<picture>
+						<source
+							srcset="https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/mobile/index/Hero%20Section2.png?raw=true"
+							media="(max-width: 768px)"
+						/>
+						<img
+							class="absolute top-0 left-0 z-0 h-full w-full object-cover"
+							src="https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/desktop/index/Hero%20Section2.png?raw=true"
+							alt="hero section Background"
+						/>
+					</picture>
+					<div class="relative z-1 w-full bg-white px-6 py-10 md:p-[clamp(2rem,4.166vw,5rem)]">
+						<h2 class="mb-4 text-h2">訂閱電子報</h2>
+						<p class="mb-6 text-xl/normal">
+							立即訂閱，搶先掌握<span class="text-primary">前端 x 職涯</span>的獨家資訊！
+						</p>
+						<form action="" class="flex flex-col items-start gap-2">
+							<input type="text" placeholder="請輸入您的大名" class="form-input" />
+							<input type="text" placeholder="請輸入您的電子信箱" class="form-input mb-4" />
+							<button type="submit" class="btn btn-primary-1"> 啟動訂閱 </button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="border-b border-secondary-1 py-16 md:py-20">
+		<div class="container">
+			<h2 class="mb-6 text-h2">與我聯繫</h2>
+			<ul class="text-2xl/normal sm:text-7/normal">
+				<li
+					class="relative flex flex-col gap-2 border-b border-gray-1 pb-4 md:flex-row md:items-center md:gap-4"
+				>
+					<div class="flex flex-col gap-2 md:flex-row md:items-center md:gap-4">
+						<span class="underline sm:text-8/normal">alysewang@hexschool.com</span>
+						<span>合作洽談</span>
+					</div>
+					<a href="#" class="stretched-link md:ml-auto">
+						<svg
+							width="24"
+							height="24"
+							viewBox="0 0 24 24"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path
+								fill-rule="evenodd"
+								clip-rule="evenodd"
+								d="M1.5 12C1.5 11.5858 1.83579 11.25 2.25 11.25H19.9393L15.2197 6.53033C14.9268 6.23744 14.9268 5.76256 15.2197 5.46967C15.5126 5.17678 15.9874 5.17678 16.2803 5.46967L22.2803 11.4697C22.5732 11.7626 22.5732 12.2374 22.2803 12.5303L16.2803 18.5303C15.9874 18.8232 15.5126 18.8232 15.2197 18.5303C14.9268 18.2374 14.9268 17.7626 15.2197 17.4697L19.9393 12.75H2.25C1.83579 12.75 1.5 12.4142 1.5 12Z"
+								fill="black"></path>
+						</svg>
+					</a>
+				</li>
+				<li
+					class="relative flex flex-col gap-4 border-b border-gray-1 pb-4 not-first:pt-6 sm:not-first:pt-4 md:flex-row md:items-center"
+				>
+					<div class="flex items-center gap-2">
+						<img
+							src="https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/desktop/index/onlyIcon.png?raw=true"
+							alt="youtube"
+						/>
+						<span> Youtube</span>
+						<span>職涯諮詢室</span>
+					</div>
+					<a href="#" class="stretched-link md:ml-auto">
+						<svg
+							width="24"
+							height="24"
+							viewBox="0 0 24 24"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path
+								fill-rule="evenodd"
+								clip-rule="evenodd"
+								d="M1.5 12C1.5 11.5858 1.83579 11.25 2.25 11.25H19.9393L15.2197 6.53033C14.9268 6.23744 14.9268 5.76256 15.2197 5.46967C15.5126 5.17678 15.9874 5.17678 16.2803 5.46967L22.2803 11.4697C22.5732 11.7626 22.5732 12.2374 22.2803 12.5303L16.2803 18.5303C15.9874 18.8232 15.5126 18.8232 15.2197 18.5303C14.9268 18.2374 14.9268 17.7626 15.2197 17.4697L19.9393 12.75H2.25C1.83579 12.75 1.5 12.4142 1.5 12Z"
+								fill="black"></path>
+						</svg>
+					</a>
+				</li>
+				<li
+					class="relative flex flex-col gap-4 border-b border-gray-1 pb-4 not-first:pt-6 sm:not-first:pt-4 md:flex-row md:items-center"
+				>
+					<div class="flex items-center gap-2">
+						<img
+							src="https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/desktop/index/onlyIcon-1.png?raw=true"
+							alt="icon"
+						/>
+						<span>podcast</span>
+						<span>職涯諮詢室</span>
+					</div>
+					<a href="#" class="stretched-link md:ml-auto">
+						<svg
+							width="24"
+							height="24"
+							viewBox="0 0 24 24"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path
+								fill-rule="evenodd"
+								clip-rule="evenodd"
+								d="M1.5 12C1.5 11.5858 1.83579 11.25 2.25 11.25H19.9393L15.2197 6.53033C14.9268 6.23744 14.9268 5.76256 15.2197 5.46967C15.5126 5.17678 15.9874 5.17678 16.2803 5.46967L22.2803 11.4697C22.5732 11.7626 22.5732 12.2374 22.2803 12.5303L16.2803 18.5303C15.9874 18.8232 15.5126 18.8232 15.2197 18.5303C14.9268 18.2374 14.9268 17.7626 15.2197 17.4697L19.9393 12.75H2.25C1.83579 12.75 1.5 12.4142 1.5 12Z"
+								fill="black"></path>
+						</svg>
+					</a>
+				</li>
+				<li
+					class="relative flex flex-col gap-4 border-b border-gray-1 pb-4 not-first:pt-6 sm:not-first:pt-4 md:flex-row md:items-center"
+				>
+					<div class="flex items-center gap-2">
+						<img
+							src="https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/desktop/index/onlyIcon-2.png?raw=true"
+							alt="facebook"
+						/>
+						<span>Facebook</span>
+						<span>前端社群</span>
+					</div>
+					<a href="#" class="stretched-link md:ml-auto">
+						<svg
+							width="24"
+							height="24"
+							viewBox="0 0 24 24"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path
+								fill-rule="evenodd"
+								clip-rule="evenodd"
+								d="M1.5 12C1.5 11.5858 1.83579 11.25 2.25 11.25H19.9393L15.2197 6.53033C14.9268 6.23744 14.9268 5.76256 15.2197 5.46967C15.5126 5.17678 15.9874 5.17678 16.2803 5.46967L22.2803 11.4697C22.5732 11.7626 22.5732 12.2374 22.2803 12.5303L16.2803 18.5303C15.9874 18.8232 15.5126 18.8232 15.2197 18.5303C14.9268 18.2374 14.9268 17.7626 15.2197 17.4697L19.9393 12.75H2.25C1.83579 12.75 1.5 12.4142 1.5 12Z"
+								fill="black"></path>
+						</svg>
+					</a>
+				</li>
+				<li
+					class="relative flex flex-col gap-4 border-b border-gray-1 pb-4 not-first:pt-6 sm:not-first:pt-4 md:flex-row md:items-center"
+				>
+					<div class="flex items-center gap-2">
+						<img
+							src="https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/mobile/index/icons8-linkedin%201.png?raw=true"
+							alt="linkedin"
+						/>
+						<span>linkedin</span>
+						<span>職涯交流</span>
+					</div>
+					<a href="#" class="stretched-link md:ml-auto">
+						<svg
+							width="24"
+							height="24"
+							viewBox="0 0 24 24"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path
+								fill-rule="evenodd"
+								clip-rule="evenodd"
+								d="M1.5 12C1.5 11.5858 1.83579 11.25 2.25 11.25H19.9393L15.2197 6.53033C14.9268 6.23744 14.9268 5.76256 15.2197 5.46967C15.5126 5.17678 15.9874 5.17678 16.2803 5.46967L22.2803 11.4697C22.5732 11.7626 22.5732 12.2374 22.2803 12.5303L16.2803 18.5303C15.9874 18.8232 15.5126 18.8232 15.2197 18.5303C14.9268 18.2374 14.9268 17.7626 15.2197 17.4697L19.9393 12.75H2.25C1.83579 12.75 1.5 12.4142 1.5 12Z"
+								fill="black"></path>
+						</svg>
+					</a>
+				</li>
+				<li
+					class="relative flex flex-col gap-4 border-b border-gray-1 pb-4 not-first:pt-6 sm:not-first:pt-4 md:flex-row md:items-center"
+				>
+					<div class="flex items-center gap-2">
+						<img
+							src="https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/desktop/index/onlyIcon-3.png?raw=true"
+							alt="instagram"
+						/>
+						<span>Instagram</span>
+						<span>日常分享</span>
+					</div>
+					<a href="#" class="stretched-link md:ml-auto">
+						<svg
+							width="24"
+							height="24"
+							viewBox="0 0 24 24"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path
+								fill-rule="evenodd"
+								clip-rule="evenodd"
+								d="M1.5 12C1.5 11.5858 1.83579 11.25 2.25 11.25H19.9393L15.2197 6.53033C14.9268 6.23744 14.9268 5.76256 15.2197 5.46967C15.5126 5.17678 15.9874 5.17678 16.2803 5.46967L22.2803 11.4697C22.5732 11.7626 22.5732 12.2374 22.2803 12.5303L16.2803 18.5303C15.9874 18.8232 15.5126 18.8232 15.2197 18.5303C14.9268 18.2374 14.9268 17.7626 15.2197 17.4697L19.9393 12.75H2.25C1.83579 12.75 1.5 12.4142 1.5 12Z"
+								fill="black"></path>
+						</svg>
+					</a>
+				</li>
 			</ul>
 		</div>
 	</section>

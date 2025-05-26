@@ -6,6 +6,7 @@
 
 	/* === font-size === */
 	--text-7: calc(7 * 0.25rem);
+	--text-8: calc(8 * 0.25rem);
 	--text-16: calc(16 * 0.25rem);
 	--text-30: calc(30 * 0.25rem);
 	/* === #font-size === */
@@ -58,6 +59,10 @@
 @utility btn-primary-1 {
 	@apply border border-primary text-primary hover:bg-primary hover:text-white;
 }
+@utility stretched-link{
+ @apply after:absolute after:content-[''] after:top-0 after:left-0 after:w-full after:h-full after:z-10;
+}
+
 
 @layer base {
 	body {
@@ -76,5 +81,11 @@
 	}
 	.site > .site-footer {
 		margin-top: auto;
+	}
+}
+
+@layer components {
+	.form-input {
+		@apply w-full bg-gray-3 px-4 py-2 text-xl/normal text-gray-1;
 	}
 }
