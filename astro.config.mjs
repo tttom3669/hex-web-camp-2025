@@ -8,5 +8,5 @@ export default defineConfig({
 		plugins: [tailwindcss()]
 	},
 	site: 'https://tttom3669.github.io/',
-	base: 'hex-web-camp-2025'
+	base: '/hex-web-camp-2025'
 })
