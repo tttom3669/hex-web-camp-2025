@@ -1,6 +1,7 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro'
-import type { TBlogPost } from '../pages/types/blog'
+import type { TBlogPost } from '../types/blog'
+import Card from '../components/Card.astro'
 // import Swiper and modules styles
 import 'swiper/css'
 import 'swiper/css/pagination'
@@ -115,7 +116,7 @@ const podcastsData = [
 					/>
 				</picture>
 				<div
-					class="relative z-1 mx-auto flex h-full w-fit flex-col gap-3 pt-6 text-primary md:w-auto md:justify-end md:pt-0 md:pb-[31.25%] md:pl-[8.334%]"
+					class="relative z-1 mx-auto flex h-full w-full flex-col gap-3 p-6 text-primary md:w-auto md:justify-end md:pt-0 md:pr-0 md:pb-[31.25%] md:pl-[8.334%]"
 				>
 					<h1
 						class="text-[clamp(3.25rem,6.25vw,7.5rem)]/normal font-black md:text-[clamp(5rem,6.25vw,7.5rem)]/normal"
@@ -259,44 +260,7 @@ const podcastsData = [
 							{
 								sortBlogsPosts.map((post) => (
 									<div class="swiper-slide">
-										<article class="flex flex-col gap-4">
-											<picture>
-												<source srcset={post.frontmatter.mobileImgSrc} media="(max-width: 768px)" />
-												<img
-													class="aspect-[351/176] h-auto w-full object-cover sm:aspect-[416/200]"
-													src={post.frontmatter.imgSrc}
-													alt={post.frontmatter.title}
-												/>
-											</picture>
-											<div>
-												<div class="mb-4 flex flex-col gap-2">
-													<date class="mb-1">{post.frontmatter.date}</date>
-													<div class="flex items-center gap-2">
-														<ul class="flex gap-1 text-primary">
-															{post.frontmatter.tags &&
-																post.frontmatter.tags.map((tag) => (
-																	<li class="text-2xl/normal">
-																		<a href={`/tags/${tag}`}>#{tag}</a>
-																	</li>
-																))}
-														</ul>
-														{post.frontmatter.category && (
-															<a
-																class="inline-block rounded-[40px] bg-primary px-3 py-1.5 font-bold text-white"
-																href={`/categories/${post.frontmatter.category}`}
-															>
-																{post.frontmatter.category}
-															</a>
-														)}
-													</div>
-													<h3 class="mb-2 text-h3">{post.frontmatter.title}</h3>
-													<p class="line-clamp-2 text-gray-1">{post.frontmatter.description}</p>
-												</div>
-												<a class="btn btn-outline-gray-1" href={`/blogs/${post.frontmatter.slug}`}>
-													閱讀內文
-												</a>
-											</div>
-										</article>
+										<Card postData={post.frontmatter} />
 									</div>
 								))
 							}

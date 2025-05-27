@@ -1,0 +1,35 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro'
+import BlogLayout from '../../layouts/BlogLayout.astro'
+import type { TBlogPost } from '../../types/blog'
+const blogsPosts = await Astro.glob<TBlogPost>('./*.md')
+
+const firstBlogPost = Object.values(blogsPosts).filter(
+	(post) => post.frontmatter.category === '最新文章'
+)[0]
+
+const filterPosts = Object.values(blogsPosts).filter(
+	(post) => post.frontmatter.category !== '最新文章'
+)
+
+const sortBlogsPosts = filterPosts
+	.sort((a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime())
+	.slice(0, 11)
+
+const pageCount = Math.ceil((filterPosts.length + 1) / 12) // +1 是因為有一篇最新文章在前面
+
+const pagination = {
+	currentPage: 1,
+	totalPages: pageCount,
+	hasPrevPage: false,
+	hasNextPage: true
+}
+---
+
+<MainLayout title="部落格 | Alyse Wang">
+	<BlogLayout
+		firstBlogPost={firstBlogPost}
+		sortBlogsPosts={sortBlogsPosts}
+		pagination={pagination}
+	/>
+</MainLayout>

@@ -1,0 +1,52 @@
+---
+import { getUrl } from '../utils/url'
+
+const { title, date, tags, imgSrc, mobileImgSrc, category, slug, description } =
+	Astro.props.postData
+const formattedDate = new Date(date).toLocaleDateString('zh-TW', {
+	year: 'numeric',
+	month: '2-digit',
+	day: '2-digit'
+})
+---
+
+<article class="flex flex-col gap-4">
+	<picture>
+		<source srcset={mobileImgSrc} media="(max-width: 768px)" />
+		<img
+			class="aspect-[351/176] h-auto w-full object-cover sm:aspect-[416/200]"
+			src={imgSrc}
+			alt={title}
+		/>
+	</picture>
+	<div>
+		<div class="mb-4 flex flex-col gap-2">
+			<date class="mb-1">{formattedDate}</date>
+			<div class="flex flex-wrap items-center gap-2">
+				<ul class="flex gap-1 text-primary">
+					{
+						tags &&
+							tags.map((tag: string) => (
+								<li class="text-2xl/normal">
+									<a href={getUrl(`/tags/${tag}`)}>#{tag}</a>
+								</li>
+							))
+					}
+				</ul>
+				{
+					category && (
+						<a
+							class="inline-block rounded-[40px] bg-primary px-3 py-1.5 font-bold text-white"
+							href={getUrl(`/categories/${category}`)}
+						>
+							{category}
+						</a>
+					)
+				}
+			</div>
+			<h3 class="mb-2 text-h3">{title}</h3>
+			<p class="line-clamp-2 text-gray-1">{description}</p>
+		</div>
+		<a class="btn btn-outline-gray-1" href={getUrl(`/blogs/${slug}`)}> 閱讀內文 </a>
+	</div>
+</article>

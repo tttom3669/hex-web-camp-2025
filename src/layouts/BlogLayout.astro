@@ -1,0 +1,268 @@
+---
+import MainLayout from '../layouts/MainLayout.astro'
+import type { TBlogPost } from '../types/blog'
+import Card from '../components/Card.astro'
+import { getUrl } from '../utils/url'
+import type { MarkdownInstance } from 'astro'
+
+// const blogsPosts = await Astro.glob<TBlogPost>('./*.md')
+
+// const firstBlogPost = Object.values(blogsPosts).filter(
+// 	(post) => post.frontmatter.category === '最新文章'
+// )[0]
+
+// const filterPosts = Object.values(blogsPosts).filter(
+// 	(post) => post.frontmatter.category !== '最新文章'
+// )
+
+// const sortBlogsPosts = filterPosts
+// 	.sort((a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime())
+// 	.slice(0, 11)
+
+// 定義 props 的類型
+type Props = {
+	firstBlogPost: MarkdownInstance<TBlogPost>
+	sortBlogsPosts: MarkdownInstance<TBlogPost>[]
+	pagination: {
+		currentPage: number
+		totalPages: number
+		hasPrevPage: Boolean
+		hasNextPage: Boolean
+	}
+}
+
+// 使用類型斷言為解構的變數指定類型
+const { firstBlogPost, sortBlogsPosts, pagination } = Astro.props as Props
+---
+
+<MainLayout title="部落格 | Alyse Wang">
+	<section>
+		<div class="flex flex-wrap">
+			<div class="relative aspect-square h-auto w-full sm:aspect-[960/834] lg:w-1/2">
+				<picture>
+					<source
+						srcset="https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/mobile/index/Hero%20Section.png?raw=true"
+						media="(max-width: 768px)"
+					/>
+					<img
+						class="absolute top-0 left-0 h-full w-full object-cover"
+						src="https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/desktop/index/Hero%20Section.png?raw=true"
+						alt="hero section Background"
+					/>
+				</picture>
+			</div>
+			<div class="relative aspect-[375/180] h-auto w-full md:aspect-[960/834] lg:w-1/2">
+				<picture>
+					<source
+						srcset="https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/mobile/index/Hero%20Section2.png?raw=true"
+						media="(max-width: 768px)"
+					/>
+					<img
+						class="absolute top-0 left-0 z-0 h-full w-full object-cover"
+						src="https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/desktop/index/Hero%20Section2.png?raw=true"
+						alt="hero section Background"
+					/>
+				</picture>
+				<div
+					class="relative z-1 mx-auto flex h-full w-full flex-col justify-center gap-3 p-6 text-primary md:w-auto md:justify-end md:pt-0 md:pr-0 md:pb-[31.25%] md:pl-[8.334%]"
+				>
+					<h1
+						class="text-[clamp(3.25rem,6.25vw,7.5rem)]/normal font-black md:text-[clamp(5rem,6.25vw,7.5rem)]/normal"
+					>
+						BLOG
+					</h1>
+					<p class="text-7/normal font-bold">前端工程師 & 職涯諮詢師</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="border border-secondary-1">
+		<article class="g-row">
+			<div class="col-span-12 lg:col-span-6">
+				<picture>
+					<source srcset={firstBlogPost.frontmatter.mobileImgSrc} media="(max-width: 768px)" />
+					<img
+						src={firstBlogPost.frontmatter.imgSrc}
+						alt={firstBlogPost.frontmatter.title}
+						class="aspect-square h-auto w-full object-cover sm:aspect-[948/640]"
+					/>
+				</picture>
+			</div>
+			<div class="col-span-12 lg:col-span-6">
+				<div
+					class="flex h-full flex-col items-start justify-center px-3 py-12 sm:pr-6 sm:pl-6 lg:py-0 lg:pr-6 lg:pl-0 xl:max-w-[33.13vw] xl:pr-0"
+				>
+					<div class="mb-4 flex flex-col gap-2">
+						<date class="mb-1">{firstBlogPost.frontmatter.date}</date>
+						<div class="flex items-center gap-2">
+							<ul class="flex gap-1 text-primary">
+								{
+									firstBlogPost.frontmatter.tags &&
+										firstBlogPost.frontmatter.tags.map((tag: string) => (
+											<li class="text-2xl/normal">
+												<a href={`/tags/${tag}`}>#{tag}</a>
+											</li>
+										))
+								}
+							</ul>
+							{
+								firstBlogPost.frontmatter.category && (
+									<a
+										class="inline-block rounded-[40px] bg-primary px-3 py-1.5 font-bold text-white"
+										href={`/categories/${firstBlogPost.frontmatter.category}`}
+									>
+										{firstBlogPost.frontmatter.category}
+									</a>
+								)
+							}
+						</div>
+						<h3 class="mb-2 text-h3">{firstBlogPost.frontmatter.title}</h3>
+						<p class="line-clamp-2">{firstBlogPost.frontmatter.description}</p>
+					</div>
+					<a class="btn btn-outline-gray-1" href={`/blogs/${firstBlogPost.frontmatter.slug}`}>
+						閱讀內文
+					</a>
+				</div>
+			</div>
+		</article>
+	</section>
+
+	<section class="py-16 md:py-20">
+		<div class="container">
+			<div class="mb-10 g-row">
+				<div class="col-span-12 sm:col-span-6 lg:col-span-4">
+					<div class="flex items-center gap-2.5 rounded-[40px] border border-gray-1 p-4">
+						<svg
+							width="24"
+							height="24"
+							viewBox="0 0 24 24"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path
+								d="M17.6129 15.5163C19.0653 13.5343 19.7159 11.077 19.4343 8.636C19.1528 6.19499 17.96 3.95028 16.0945 2.35097C14.2291 0.751654 11.8285 -0.0843218 9.37314 0.0102879C6.91777 0.104898 4.58867 1.12312 2.85179 2.86123C1.11492 4.59935 0.0983653 6.92919 0.00551259 9.38462C-0.0873401 11.8401 0.750353 14.24 2.351 16.1043C3.95165 17.9687 6.19721 19.1599 8.63842 19.4397C11.0796 19.7194 13.5365 19.0671 15.5174 17.6133H15.5159C15.5599 17.6733 15.6089 17.7308 15.6629 17.7858L21.4379 23.5608C21.7192 23.8422 22.1007 24.0004 22.4986 24.0006C22.8965 24.0007 23.2782 23.8428 23.5596 23.5615C23.8411 23.2803 23.9993 22.8987 23.9994 22.5008C23.9996 22.1029 23.8417 21.7212 23.5604 21.4398L17.7854 15.6648C17.7318 15.6105 17.6741 15.5618 17.6129 15.5163ZM17.9999 9.75027C17.9999 10.8337 17.7865 11.9065 17.3719 12.9074C16.9573 13.9083 16.3496 14.8178 15.5835 15.5839C14.8174 16.35 13.908 16.9577 12.907 17.3723C11.9061 17.7869 10.8333 18.0003 9.74989 18.0003C8.66648 18.0003 7.59369 17.7869 6.59275 17.3723C5.59182 16.9577 4.68234 16.35 3.91626 15.5839C3.15018 14.8178 2.54248 13.9083 2.12788 12.9074C1.71328 11.9065 1.49989 10.8337 1.49989 9.75027C1.49989 7.56224 2.36908 5.46382 3.91626 3.91664C5.46343 2.36947 7.56185 1.50027 9.74989 1.50027C11.9379 1.50027 14.0363 2.36947 15.5835 3.91664C17.1307 5.46382 17.9999 7.56224 17.9999 9.75027Z"
+								fill="#4B4B4B"></path>
+						</svg>
+						<input
+							type="text"
+							placeholder="搜尋你感興趣的文章"
+							class="field-sizing-content max-w-4/5 text-gray-1 focus:outline-0"
+						/>
+					</div>
+				</div>
+			</div>
+			<div class="mb-10 g-row gap-y-8 sm:gap-y-10">
+				{
+					sortBlogsPosts.map((post) => (
+						<div class="col-span-12 sm:col-span-6 lg:col-span-4">
+							<Card postData={post.frontmatter} />
+						</div>
+					))
+				}
+				<div class="col-span-12">
+					<div class="flex items-center justify-center">
+						<ul class="flex items-center rounded-[40px] bg-white px-4 py-2">
+							<li>
+								<a
+									href={getUrl(`/blogs/${pagination.currentPage - 1}`)}
+									class={`${pagination.hasPrevPage ? '' : 'pointer-events-none'}`}
+								>
+									<svg
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<path
+											fill-rule="evenodd"
+											clip-rule="evenodd"
+											d="M17.031 2.46912C17.1008 2.53879 17.1563 2.62155 17.1941 2.71267C17.2319 2.80379 17.2513 2.90147 17.2513 3.00012C17.2513 3.09877 17.2319 3.19645 17.1941 3.28757C17.1563 3.37869 17.1008 3.46145 17.031 3.53112L8.5605 12.0001L17.031 20.4691C17.1718 20.6099 17.2509 20.801 17.2509 21.0001C17.2509 21.1993 17.1718 21.3903 17.031 21.5311C16.8902 21.6719 16.6992 21.7511 16.5 21.7511C16.3008 21.7511 16.1098 21.6719 15.969 21.5311L6.969 12.5311C6.89915 12.4615 6.84374 12.3787 6.80593 12.2876C6.76812 12.1965 6.74866 12.0988 6.74866 12.0001C6.74866 11.9015 6.76812 11.8038 6.80593 11.7127C6.84374 11.6216 6.89915 11.5388 6.969 11.4691L15.969 2.46912C16.0387 2.39928 16.1214 2.34386 16.2125 2.30605C16.3037 2.26824 16.4013 2.24878 16.5 2.24878C16.5986 2.24878 16.6963 2.26824 16.7874 2.30605C16.8786 2.34386 16.9613 2.39928 17.031 2.46912Z"
+											fill="#4B4B4B"></path>
+									</svg>
+								</a>
+							</li>
+							{
+								Array.from({ length: pagination.totalPages }, (_, index) => (
+									<li>
+										<a
+											href={getUrl(`/blogs/${index + 1}`)}
+											class={`flex size-10 items-center justify-center hover:text-primary ${
+												pagination.currentPage === index + 1
+													? 'pointer-events-none text-primary'
+													: 'text-gray-1'
+											}`}
+										>
+											{index + 1}
+										</a>
+									</li>
+								))
+							}
+							<li>
+								<a
+									href={getUrl(`/blogs/${pagination.currentPage + 1}`)}
+									class={`${pagination.hasNextPage ? '' : 'pointer-events-none'}`}
+								>
+									<svg
+										width="24"
+										height="24"
+										viewBox="0 0 24 24"
+										fill="none"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<path
+											fill-rule="evenodd"
+											clip-rule="evenodd"
+											d="M6.969 2.46912C7.03867 2.39928 7.12143 2.34386 7.21255 2.30605C7.30366 2.26824 7.40135 2.24878 7.5 2.24878C7.59865 2.24878 7.69633 2.26824 7.78745 2.30605C7.87857 2.34386 7.96133 2.39928 8.031 2.46912L17.031 11.4691C17.1008 11.5388 17.1563 11.6216 17.1941 11.7127C17.2319 11.8038 17.2513 11.9015 17.2513 12.0001C17.2513 12.0988 17.2319 12.1965 17.1941 12.2876C17.1563 12.3787 17.1008 12.4615 17.031 12.5311L8.031 21.5311C7.89017 21.6719 7.69916 21.7511 7.5 21.7511C7.30083 21.7511 7.10983 21.6719 6.969 21.5311C6.82817 21.3903 6.74905 21.1993 6.74905 21.0001C6.74905 20.801 6.82817 20.6099 6.969 20.4691L15.4395 12.0001L6.969 3.53112C6.89915 3.46145 6.84374 3.37869 6.80593 3.28757C6.76812 3.19645 6.74866 3.09877 6.74866 3.00012C6.74866 2.90147 6.76812 2.80379 6.80593 2.71267C6.84374 2.62155 6.89915 2.53879 6.969 2.46912Z"
+											fill="#4B4B4B"></path>
+									</svg>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<div class="hidden border-t border-secondary-1 bg-gray-4 py-20 md:block">
+		<div class="container">
+			<div class="flex items-center justify-between">
+				<a class="text-8/normal" href="mailto:alysewang@hexschool.com">alysewang@hexschool.com</a>
+				<div class="flex">
+					<a href="#">
+						<img
+							src="https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/desktop/index/onlyIcon.png?raw=true"
+							alt="youtube"
+						/>
+					</a>
+					<a href="#">
+						<img
+							src="https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/desktop/index/onlyIcon-1.png?raw=true"
+							alt="icon"
+						/>
+					</a>
+					<a href="#">
+						<img
+							src="https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/desktop/index/onlyIcon-2.png?raw=true"
+							alt="facebook"
+						/>
+					</a>
+					<a href="#">
+						<img
+							src="https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/mobile/index/icons8-linkedin%201.png?raw=true"
+							alt="linkedin"
+						/>
+					</a>
+					<a href="#">
+						<img
+							src="https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/desktop/index/onlyIcon-3.png?raw=true"
+							alt="instagram"
+						/>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</MainLayout>

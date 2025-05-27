@@ -1,6 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro'
-import type { TBlogPost } from '../../pages/types/blog'
+import type { TBlogPost } from '../../types/blog'
 
 // 取得所有文章
 const allPosts = await Astro.glob<TBlogPost>('../blogs/*.md')

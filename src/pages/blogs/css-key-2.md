@@ -1,5 +1,5 @@
 ---
-date: 2024/09/01
+date: 2024/01/01
 title: CSS 魔法大揭密：排版與設計的三大關鍵技巧2
 slug: 'css-key-2'
 imgSrc: 'https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/desktop/index/photo7.png?raw=true'

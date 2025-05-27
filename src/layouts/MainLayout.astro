@@ -24,14 +24,14 @@ const currentYear = new Date().getFullYear()
 			<div class="container">
 				<ul class="flex items-center justify-center gap-10 py-6 text-7 font-bold">
 					<li><a href={getUrl('/')}>首頁</a></li>
-					<li><a href={getUrl('/blog')}>部落格</a></li>
+					<li><a href={getUrl('/blogs')}>部落格</a></li>
 				</ul>
 			</div>
 		</header>
 		<main class="site-main">
 			<slot />
 		</main>
-		<footer class="site-footer py-6 text-center">
+		<footer class="site-footer py-6 text-center bg-white">
 			<div class="container">
 				© {currentYear} Alyse Wang. All rights reserved.
 			</div>

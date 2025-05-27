@@ -1,0 +1,57 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro'
+import BlogLayout from '../../layouts/BlogLayout.astro'
+import type { GetStaticPathsResult, PaginateFunction, Page } from 'astro'
+import type { MarkdownInstance } from 'astro'
+import type { TBlogPost } from '../../types/blog'
+
+export async function getStaticPaths({
+	paginate
+}: {
+	paginate: PaginateFunction
+}): Promise<GetStaticPathsResult> {
+	const astronautPages: MarkdownInstance<TBlogPost>[] = await Astro.glob<TBlogPost>('../blogs/*.md')
+
+	// 設定每頁的項目數量
+	const pageSize = 12
+
+	// 使用 paginate 函數進行分頁
+	return paginate(astronautPages, { pageSize })
+}
+
+// 型別定義
+type Props = {
+	page: Page<MarkdownInstance<TBlogPost>>
+	allPosts: MarkdownInstance<TBlogPost>[]
+}
+
+// 使用型別斷言
+const { page } = Astro.props as Props
+
+// 取得所有文章的第一篇
+const allPosts = await Astro.glob<TBlogPost>('../blogs/*.md')
+
+const firstPost = allPosts.filter((post) => post.frontmatter.category === '最新文章')[0]
+
+// 排除第一篇
+const filterPosts = page.data.filter(
+	(post) => post.frontmatter.title !== firstPost.frontmatter.title
+)
+
+// 排序文章
+const sortBlogsPosts = filterPosts.sort(
+	(a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime()
+)
+
+// 計算頁數
+const pagination = {
+	currentPage: page.currentPage,
+	totalPages: page.lastPage,
+	hasPrevPage: !!page.url.prev,
+	hasNextPage: !!page.url.next
+}
+---
+
+<MainLayout>
+	<BlogLayout firstBlogPost={firstPost} sortBlogsPosts={sortBlogsPosts} pagination={pagination} />
+</MainLayout>
