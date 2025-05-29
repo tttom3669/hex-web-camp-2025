@@ -1,14 +1,14 @@
 ---
 layout: ../../layouts/PostLayout.astro
-date: 2024/10/11
-slug: react-key
-title: React 入門不再迷惘：三步驟帶你上手核心概念
-imgSrc: https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/desktop/blog/photo4.png?raw=true
-mobileImgSrc: https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/mobile/blog/photo10.png?raw=true
+title: 前端作品集打造指南：讓你的專案成為履歷亮點
+slug: 'font-end-project'
+date: 2024/09/07
+imgSrc: 'https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/desktop/blog/photo1.png?raw=true'
+mobileImgSrc: 'https://github.com/hexschool/2022-web-layout-training/blob/main/2025-web-camp/mobile/blog/photo1.png?raw=true'
+description: 對正在求職的前端工程師而言，作品集往往是第一個「說話」的利器。當面試官瀏覽你的網頁作品時，能夠快速了解你的程式邏輯、設計感以及解決問題的思路。我在協助多位同學優化履歷與作品集的過程中，總結出一些關鍵要素，分享給正在打造、升級作品集的你。
 tags:
-  - React
-  - 入門基礎
-description: 你是否對 React 感到好奇，卻苦惱於該如何正式啟動學習之路？身為前端工程師兼職涯諮詢師，我常遇到同學問我：「React 到底該怎麼入門？」為了幫大家減少摸索的時間，我整理出三個循序漸進的關鍵步驟，帶你更輕鬆地掌握 React 核心概念，真正把理論應用在實際專案中。
+  - 作品集
+  - 求職攻略
 ---
 ## 前言
 

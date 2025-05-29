@@ -1,0 +1,209 @@
+---
+import MainLayout from '../layouts/MainLayout.astro'
+import type { MarkdownLayoutProps } from 'astro'
+import type { TBlogPost } from '../types/blog'
+
+type Props = MarkdownLayoutProps<TBlogPost>
+
+const { title, mobileImgSrc, imgSrc, date, tags, category, description, slug } =
+	Astro.props.frontmatter
+
+const blogsPosts = await Astro.glob<TBlogPost>('../pages/blogs/*.md')
+
+const sortBlogsPosts = blogsPosts.sort(
+	(a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime()
+)
+
+const currentPostIndex = sortBlogsPosts.findIndex((post) => post.frontmatter.slug === slug)
+
+const previousPost =
+	currentPostIndex + 1 === sortBlogsPosts.length ? undefined : sortBlogsPosts[currentPostIndex + 1]
+const nextPost = currentPostIndex === 0 ? undefined : sortBlogsPosts[currentPostIndex - 1]
+---
+
+<MainLayout title={title}>
+	<article class="post-layout">
+		<section class="border border-secondary-1">
+			<article class="g-row">
+				<div class="col-span-12 lg:col-span-6">
+					<picture>
+						<source srcset={mobileImgSrc} media="(max-width: 768px)" />
+						<img
+							src={imgSrc}
+							alt={title}
+							class="aspect-square h-auto w-full object-cover sm:aspect-[948/640]"
+						/>
+					</picture>
+				</div>
+				<div class="col-span-12 lg:col-span-6">
+					<div
+						class="flex h-full flex-col items-start justify-center px-3 py-12 sm:pr-6 sm:pl-6 lg:py-0 lg:pr-6 lg:pl-0 xl:max-w-[33.13vw] xl:pr-0"
+					>
+						<div class="mb-4 flex flex-col gap-2">
+							<date class="mb-1">{date}</date>
+							<div class="flex items-center gap-2">
+								<ul class="flex gap-1 text-primary">
+									{
+										tags &&
+											tags.map((tag: string) => (
+												<li class="text-2xl/normal">
+													<a href={`/tags/${tag}`}>#{tag}</a>
+												</li>
+											))
+									}
+								</ul>
+								{
+									category && (
+										<a
+											class="inline-block rounded-[40px] bg-primary px-3 py-1.5 font-bold text-white"
+											href={`/categories/${category}`}
+										>
+											{category}
+										</a>
+									)
+								}
+							</div>
+							<h3 class="text-h3">{title}</h3>
+						</div>
+					</div>
+				</div>
+			</article>
+		</section>
+		<section class="py-16 md:py-20">
+			<div class="container">
+				<div class="g-row">
+					<div
+						class="col-span-12 md:col-span-10 md:col-start-2 lg:col-span-8 lg:col-start-3 xl:col-span-6 xl:col-start-4"
+					>
+						<div class="post-content mb-12">
+							<slot />
+						</div>
+						<ul class="flex items-center justify-between text-gray-1">
+							{
+								previousPost && (
+									<li>
+										<a
+											class="flex items-center gap-1 rounded-[40px] border border-black px-4 py-2"
+											href={`/blogs/${previousPost.frontmatter.slug}`}
+										>
+											<svg
+												width="24"
+												height="24"
+												viewBox="0 0 24 24"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<path
+													fill-rule="evenodd"
+													clip-rule="evenodd"
+													d="M17.0311 2.46888C17.101 2.53854 17.1564 2.62131 17.1942 2.71243C17.232 2.80354 17.2515 2.90122 17.2515 2.99988C17.2515 3.09853 17.232 3.19621 17.1942 3.28733C17.1564 3.37844 17.101 3.46121 17.0311 3.53088L8.56062 11.9999L17.0311 20.4689C17.1719 20.6097 17.2511 20.8007 17.2511 20.9999C17.2511 21.199 17.1719 21.39 17.0311 21.5309C16.8903 21.6717 16.6993 21.7508 16.5001 21.7508C16.301 21.7508 16.1099 21.6717 15.9691 21.5309L6.96912 12.5309C6.89927 12.4612 6.84386 12.3784 6.80605 12.2873C6.76824 12.1962 6.74878 12.0985 6.74878 11.9999C6.74878 11.9012 6.76824 11.8035 6.80605 11.7124C6.84386 11.6213 6.89927 11.5385 6.96912 11.4689L15.9691 2.46888C16.0388 2.39903 16.1216 2.34362 16.2127 2.30581C16.3038 2.268 16.4015 2.24854 16.5001 2.24854C16.5988 2.24854 16.6965 2.268 16.7876 2.30581C16.8787 2.34362 16.9615 2.39903 17.0311 2.46888Z"
+													fill="#4B4B4B"
+												/>
+											</svg>
+											上一篇
+										</a>
+									</li>
+								)
+							}
+							{
+								nextPost && (
+									<li class="ml-auto">
+										<a
+											class="flex items-center gap-1 rounded-[40px] border border-black px-4 py-2"
+											href={`/blogs/${nextPost.frontmatter.slug}`}
+										>
+											下一篇
+											<svg
+												width="24"
+												height="24"
+												viewBox="0 0 24 24"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<path
+													fill-rule="evenodd"
+													clip-rule="evenodd"
+													d="M6.96912 2.46888C7.03879 2.39903 7.12155 2.34362 7.21267 2.30581C7.30379 2.268 7.40147 2.24854 7.50012 2.24854C7.59877 2.24854 7.69645 2.268 7.78757 2.30581C7.87869 2.34362 7.96145 2.39903 8.03112 2.46888L17.0311 11.4689C17.101 11.5385 17.1564 11.6213 17.1942 11.7124C17.232 11.8035 17.2515 11.9012 17.2515 11.9999C17.2515 12.0985 17.232 12.1962 17.1942 12.2873C17.1564 12.3784 17.101 12.4612 17.0311 12.5309L8.03112 21.5309C7.89029 21.6717 7.69928 21.7508 7.50012 21.7508C7.30096 21.7508 7.10995 21.6717 6.96912 21.5309C6.82829 21.39 6.74917 21.199 6.74917 20.9999C6.74917 20.8007 6.82829 20.6097 6.96912 20.4689L15.4396 11.9999L6.96912 3.53088C6.89927 3.46121 6.84386 3.37844 6.80605 3.28733C6.76824 3.19621 6.74878 3.09853 6.74878 2.99988C6.74878 2.90122 6.76824 2.80354 6.80605 2.71243C6.84386 2.62131 6.89927 2.53854 6.96912 2.46888Z"
+													fill="#4B4B4B"
+												/>
+											</svg>
+										</a>
+									</li>
+								)
+							}
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+	</article>
+</MainLayout>
+
+<style is:global>
+	.post-content h2 {
+		font-size: 1.75rem;
+		font-weight: 700;
+		line-height: 1.5;
+		color: var(--color-primary);
+	}
+	.post-content h3 {
+		font-size: 1.25rem;
+		font-weight: 700;
+		line-height: 1.5;
+	}
+	.post-content blockquote {
+		background-color: var(--color-gray-2);
+		padding: 1.5rem;
+		border-radius: 24px;
+		font-weight: 700;
+	}
+	.post-content ol {
+		list-style-type: decimal;
+		padding-left: 1.5rem;
+	}
+	.post-content ul {
+		list-style-type: disc;
+		padding-left: 1.5rem;
+	}
+
+	.post-content p a {
+		color: var(--color-primary);
+		text-decoration: underline;
+	}
+	.post-content strong {
+		color: var(--color-primary);
+		margin: 0 4px;
+	}
+
+	/* ---- 距離 ---- */
+	.post-content h2:not(:first-child),
+	.post-content h3:not(:first-child),
+	.post-content h2 + p,
+	.post-content blockquote,
+	.post-content blockquote + * {
+		margin-top: 1.5rem;
+	}
+	.post-content p:has(img),
+	.post-content picture img {
+		margin-top: 3rem;
+	}
+	.post-content p + h2:not(:first-child) {
+		margin-top: 3rem;
+	}
+	/* 只控制相鄰段落之間的距離 */
+	.post-content p + p {
+		margin-top: 0.5rem;
+	}
+	.post-content p + ol,
+	.post-content p + ul {
+		margin-top: 0;
+	}
+	.post-content h2 + ol,
+	.post-content h2 + ul {
+		margin-top: 1.5rem;
+	}
+	.post-content h3 + * {
+		margin-top: 0.75rem;
+	}
+	/* ---- #距離 ---- */
+</style>
