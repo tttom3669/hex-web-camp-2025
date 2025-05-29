@@ -1,5 +1,4 @@
 ---
-import MainLayout from '../../layouts/MainLayout.astro'
 import BlogLayout from '../../layouts/BlogLayout.astro'
 import type { TBlogPost } from '../../types/blog'
 const blogsPosts = await Astro.glob<TBlogPost>('./*.md')
@@ -26,10 +25,4 @@ const pagination = {
 }
 ---
 
-<MainLayout title="部落格 | Alyse Wang">
-	<BlogLayout
-		firstBlogPost={firstBlogPost}
-		sortBlogsPosts={sortBlogsPosts}
-		pagination={pagination}
-	/>
-</MainLayout>
+<BlogLayout firstBlogPost={firstBlogPost} sortBlogsPosts={sortBlogsPosts} pagination={pagination} />

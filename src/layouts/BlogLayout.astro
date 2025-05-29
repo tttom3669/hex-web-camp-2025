@@ -5,20 +5,6 @@ import Card from '../components/Card.astro'
 import { getUrl } from '../utils/url'
 import type { MarkdownInstance } from 'astro'
 
-// const blogsPosts = await Astro.glob<TBlogPost>('./*.md')
-
-// const firstBlogPost = Object.values(blogsPosts).filter(
-// 	(post) => post.frontmatter.category === '最新文章'
-// )[0]
-
-// const filterPosts = Object.values(blogsPosts).filter(
-// 	(post) => post.frontmatter.category !== '最新文章'
-// )
-
-// const sortBlogsPosts = filterPosts
-// 	.sort((a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime())
-// 	.slice(0, 11)
-
 // 定義 props 的類型
 type Props = {
 	firstBlogPost: MarkdownInstance<TBlogPost>
@@ -128,11 +114,13 @@ const { firstBlogPost, sortBlogsPosts, pagination } = Astro.props as Props
 		</article>
 	</section>
 
-	<section class="py-16 md:py-20">
+	<section class="border-b border-secondary-1 py-16 md:py-20">
 		<div class="container">
 			<div class="mb-10 g-row">
 				<div class="col-span-12 sm:col-span-6 lg:col-span-4">
-					<div class="flex items-center gap-2.5 rounded-[40px] border border-gray-1 p-4">
+					<div
+						class="flex items-center gap-2.5 rounded-[40px] border border-gray-1 p-4"
+					>
 						<svg
 							width="24"
 							height="24"
@@ -146,13 +134,15 @@ const { firstBlogPost, sortBlogsPosts, pagination } = Astro.props as Props
 						</svg>
 						<input
 							type="text"
+							name="q"
 							placeholder="搜尋你感興趣的文章"
 							class="field-sizing-content max-w-4/5 text-gray-1 focus:outline-0"
 						/>
+						<button type="submit" class="hidden"></button>
 					</div>
 				</div>
 			</div>
-			<div class="mb-10 g-row gap-y-8 sm:gap-y-10">
+			<div class="g-row gap-y-8 sm:gap-y-10">
 				{
 					sortBlogsPosts.map((post) => (
 						<div class="col-span-12 sm:col-span-6 lg:col-span-4">
@@ -226,7 +216,7 @@ const { firstBlogPost, sortBlogsPosts, pagination } = Astro.props as Props
 		</div>
 	</section>
 
-	<div class="hidden border-t border-secondary-1 bg-gray-4 py-20 md:block">
+	<div class="hidden bg-gray-4 py-20 md:block">
 		<div class="container">
 			<div class="flex items-center justify-between">
 				<a class="text-8/normal" href="mailto:alysewang@hexschool.com">alysewang@hexschool.com</a>

@@ -1,0 +1,56 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro'
+import Card from '../../components/Card.astro'
+import type { TBlogPost } from '../../types/blog'
+import type { MarkdownInstance } from 'astro'
+const blogsPosts = Object.values(
+	import.meta.glob('./*.md', { eager: true })
+) as MarkdownInstance<TBlogPost>[]
+
+// 預設顯示所有文章
+const url = Astro.url
+const searchQuery = url.searchParams.get('q')?.trim().toLowerCase() || ''
+
+console.log('URL: ', url.href)
+console.log('Query: ', searchQuery)
+
+if (!searchQuery) {
+	console.log('No search query provided')
+}
+
+const filteredPosts = Object.values(blogsPosts).filter(
+	(post) =>
+		post.frontmatter.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+		post.frontmatter.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+		(post.frontmatter.tags || []).some((tag) =>
+			tag.toLowerCase().includes(searchQuery.toLowerCase())
+		)
+)
+---
+
+<MainLayout title="搜尋文章">
+	<section class="container py-10">
+		<h1 class="mb-6 text-4xl font-bold">搜尋結果</h1>
+		<form method="GET" action="/blogs/search" class="mb-6">
+			<input
+				type="text"
+				name="q"
+				placeholder="輸入關鍵字..."
+				value={searchQuery}
+				class="w-full rounded border border-gray-300 px-4 py-2"
+			/>
+		</form>
+
+		{
+			filteredPosts.length > 0 ? (
+				<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-y-10 lg:grid-cols-3">
+					{filteredPosts.map((post) => (
+						<Card postData={post.frontmatter} />
+					))}
+				</div>
+			) : (
+				<p class="text-gray-500">找不到符合的文章。</p>
+			)
+		}
+	</section>
+</MainLayout>

@@ -11,12 +11,14 @@ export async function getStaticPaths({
 	paginate: PaginateFunction
 }): Promise<GetStaticPathsResult> {
 	const astronautPages: MarkdownInstance<TBlogPost>[] = await Astro.glob<TBlogPost>('../blogs/*.md')
-
+	const sortAstronautPages = astronautPages.sort(
+		(a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime()
+	)
 	// 設定每頁的項目數量
 	const pageSize = 12
 
 	// 使用 paginate 函數進行分頁
-	return paginate(astronautPages, { pageSize })
+	return paginate(sortAstronautPages, { pageSize })
 }
 
 // 型別定義
@@ -52,6 +54,4 @@ const pagination = {
 }
 ---
 
-<MainLayout>
-	<BlogLayout firstBlogPost={firstPost} sortBlogsPosts={sortBlogsPosts} pagination={pagination} />
-</MainLayout>
+<BlogLayout firstBlogPost={firstPost} sortBlogsPosts={sortBlogsPosts} pagination={pagination} />
