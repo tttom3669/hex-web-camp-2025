@@ -1,8 +1,7 @@
 ---
-// src/pages/category/[category].astro
-
 import MainLayout from '../../layouts/MainLayout.astro'
 import type { TBlogPost } from '../../types/blog'
+import Card from '../../components/Card.astro'
 
 // 取得所有文章
 const allPosts = await Astro.glob<TBlogPost>('../blogs/*.md')
@@ -30,9 +29,20 @@ export async function getStaticPaths() {
 }
 ---
 
-<MainLayout title={`分類: ${category}`}>
-	<h1>分類: {category}</h1>
-	<ul>
-		{filteredPosts.map((post) => <li>{post.frontmatter.title}</li>)}
-	</ul>
+<MainLayout title={`分類: ${category} | Alyse Wang`}>
+	<section class="py-16 md:py-20">
+		<div class="container">
+			<h1 class="mb-10 text-center text-h3">分類: {category}</h1>
+			<ul class="g-row gap-y-8 sm:gap-y-10">
+				{filteredPosts.length === 0 ? <p>沒有找到相關文章。</p> : null}
+				{
+					filteredPosts.map((post) => (
+						<li class="col-span-12 sm:col-span-6 lg:col-span-4">
+							<Card postData={post.frontmatter} />
+						</li>
+					))
+				}
+			</ul>
+		</div>
+	</section>
 </MainLayout>
