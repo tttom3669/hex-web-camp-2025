@@ -1,47 +1,61 @@
-# Astro Starter Kit: Minimal
+# 30 天軟體工程師體驗營｜2025  
+## 最終任務 - 個人品牌網站
 
-```sh
-pnpm create astro@latest -- --template minimal
-```
+這是基於 Astro 框架的個人品牌網站專案，旨在展示前端開發技能與設計能力。透過此專案，學習如何建立響應式網站、管理部落格內容，以及整合多種前端技術。
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
+---
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## 🚀 專案結構
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
+專案的主要目錄結構如下：
 
 ```text
 /
-├── public/
+├── public/                # 靜態資源（圖片、字型等）
 ├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+│   ├── layouts/           # 網頁佈局檔案
+│   ├── pages/             # 網頁內容（.astro 或 .md 檔案）
+│   ├── components/        # 可重用的元件
+│   └── styles/            # 全域與元件樣式
+└── package.json           # 專案依賴與指令
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+### 主要功能
+- **部落格系統**：使用 Markdown 撰寫文章，並透過 Astro 動態生成頁面。
+- **響應式設計**：支援桌面與行動裝置，提供最佳瀏覽體驗。
+- **前後篇文章導覽**：方便讀者快速切換文章。
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+---
+## 🛠 使用到的技術
 
-Any static assets, like images, can be placed in the `public/` directory.
+此專案使用了以下技術與工具：
+- **Astro**：用於建立快速、現代化的靜態網站。
+- **Tailwind CSS**：用於撰寫可維護的 CSS，提升樣式開發效率。
+- **Markdown**：用於撰寫部落格文章，簡化內容管理。
+- **pnpm**：高效的套件管理工具，用於安裝與管理專案依賴。
+- **Flexbox 與 Grid**：用於響應式佈局設計。
+- **TypeScript**：用於提升程式碼的可讀性與可靠性，支援型別檢查。
 
-## 🧞 Commands
+---
 
-All commands are run from the root of the project, from a terminal:
+## 🧞 指令
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+以下指令可在專案根目錄的終端機中執行：
 
-## 👀 Want to learn more?
+| 指令                     | 功能                                           |
+| :----------------------- | :--------------------------------------------- |
+| `pnpm install`           | 安裝專案依賴                                   |
+| `pnpm dev`               | 啟動本地開發伺服器，預設位於 `localhost:4321` |
+| `pnpm build`             | 將專案建置為生產版本，輸出至 `./dist/`         |
+| `pnpm preview`           | 本地預覽建置後的網站                          |
+| `pnpm astro ...`         | 執行 Astro CLI 指令，如 `astro add` 或 `astro check` |
+| `pnpm astro -- --help`   | 顯示 Astro CLI 的使用說明                     |
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+---
+
+## 👀 想了解更多？
+
+- [Astro 官方文件](https://docs.astro.build)
+- [Astro Discord 社群](https://astro.build/chat)
+
+---
