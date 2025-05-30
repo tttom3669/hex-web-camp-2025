@@ -87,7 +87,7 @@ const { firstBlogPost, sortBlogsPosts, pagination } = Astro.props as Props
 									firstBlogPost.frontmatter.tags &&
 										firstBlogPost.frontmatter.tags.map((tag: string) => (
 											<li class="text-2xl/normal">
-												<a href={`/tags/${tag}`}>#{tag}</a>
+												<a href={getUrl(`/tags/${tag}`)}>#{tag}</a>
 											</li>
 										))
 								}
@@ -96,7 +96,7 @@ const { firstBlogPost, sortBlogsPosts, pagination } = Astro.props as Props
 								firstBlogPost.frontmatter.category && (
 									<a
 										class="inline-block rounded-[40px] bg-primary px-3 py-1.5 font-bold text-white"
-										href={`/categories/${firstBlogPost.frontmatter.category}`}
+										href={getUrl(`/categories/${firstBlogPost.frontmatter.category}`)}
 									>
 										{firstBlogPost.frontmatter.category}
 									</a>
@@ -106,7 +106,10 @@ const { firstBlogPost, sortBlogsPosts, pagination } = Astro.props as Props
 						<h3 class="mb-2 text-h3">{firstBlogPost.frontmatter.title}</h3>
 						<p class="line-clamp-2">{firstBlogPost.frontmatter.description}</p>
 					</div>
-					<a class="btn btn-outline-gray-1" href={`/blogs/${firstBlogPost.frontmatter.slug}`}>
+					<a
+						class="btn btn-outline-gray-1"
+						href={getUrl(`/blogs/${firstBlogPost.frontmatter.slug}`)}
+					>
 						閱讀內文
 					</a>
 				</div>
@@ -118,9 +121,7 @@ const { firstBlogPost, sortBlogsPosts, pagination } = Astro.props as Props
 		<div class="container">
 			<div class="mb-10 g-row">
 				<div class="col-span-12 sm:col-span-6 lg:col-span-4">
-					<div
-						class="flex items-center gap-2.5 rounded-[40px] border border-gray-1 p-4"
-					>
+					<div class="flex items-center gap-2.5 rounded-[40px] border border-gray-1 p-4">
 						<svg
 							width="24"
 							height="24"

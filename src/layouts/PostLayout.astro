@@ -7,7 +7,7 @@ type Props = MarkdownLayoutProps<TBlogPost>
 
 const { title, mobileImgSrc, imgSrc, date, tags, category, description, slug } =
 	Astro.props.frontmatter
-
+import { getUrl } from '../utils/url'
 const blogsPosts = await Astro.glob<TBlogPost>('../pages/blogs/*.md')
 
 const sortBlogsPosts = blogsPosts.sort(
@@ -47,7 +47,7 @@ const nextPost = currentPostIndex === 0 ? undefined : sortBlogsPosts[currentPost
 										tags &&
 											tags.map((tag: string) => (
 												<li class="text-2xl/normal">
-													<a href={`/tags/${tag}`}>#{tag}</a>
+													<a href={getUrl(`/tags/${tag}`)}>#{tag}</a>
 												</li>
 											))
 									}
@@ -56,7 +56,7 @@ const nextPost = currentPostIndex === 0 ? undefined : sortBlogsPosts[currentPost
 									category && (
 										<a
 											class="inline-block rounded-[40px] bg-primary px-3 py-1.5 font-bold text-white"
-											href={`/categories/${category}`}
+											href={getUrl(`/categories/${category}`)}
 										>
 											{category}
 										</a>
@@ -84,7 +84,7 @@ const nextPost = currentPostIndex === 0 ? undefined : sortBlogsPosts[currentPost
 									<li>
 										<a
 											class="flex items-center gap-1 rounded-[40px] border border-black px-4 py-2"
-											href={`/blogs/${previousPost.frontmatter.slug}`}
+											href={getUrl(`/blogs/${previousPost.frontmatter.slug}`)}
 										>
 											<svg
 												width="24"
@@ -110,7 +110,7 @@ const nextPost = currentPostIndex === 0 ? undefined : sortBlogsPosts[currentPost
 									<li class="ml-auto">
 										<a
 											class="flex items-center gap-1 rounded-[40px] border border-black px-4 py-2"
-											href={`/blogs/${nextPost.frontmatter.slug}`}
+											href={getUrl(`/blogs/${nextPost.frontmatter.slug}`)}
 										>
 											下一篇
 											<svg
