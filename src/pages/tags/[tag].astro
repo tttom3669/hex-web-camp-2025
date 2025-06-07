@@ -31,7 +31,7 @@ export async function getStaticPaths() {
 <MainLayout title={`標籤: ${tag} | Alyse Wang`}>
 	<section class="py-16 md:py-20">
 		<div class="container">
-			<h1 class="text-h3 text-center mb-10">標籤: {tag}</h1>
+			<h1 class="mb-10 text-center text-h3">標籤: {tag}</h1>
 			<ul class="g-row gap-y-8 sm:gap-y-20">
 				{filteredPosts.length === 0 ? <p>沒有找到相關文章。</p> : null}
 				{
